@@ -2,17 +2,16 @@ package com.bcopstein.CtrlCorredorV1.Interface;
 
 import java.util.List;
 
-import com.bcopstein.CtrlCorredorV1.dataAccess.Corredor;
-import com.bcopstein.CtrlCorredorV1.dataAccess.CorredorRepository;
-import com.bcopstein.CtrlCorredorV1.dataAccess.Evento;
-import com.bcopstein.CtrlCorredorV1.dataAccess.EventoRepository;
+import com.bcopstein.CtrlCorredorV1.domain.Corredor;
 import com.bcopstein.CtrlCorredorV1.domain.EstatisticasDTO;
+import com.bcopstein.CtrlCorredorV1.domain.Evento;
 import com.bcopstein.CtrlCorredorV1.domain.PerformanceDTO;
+import com.bcopstein.CtrlCorredorV1.domain.ServicoCorredor;
 import com.bcopstein.CtrlCorredorV1.domain.ServicoEstatisticas;
+import com.bcopstein.CtrlCorredorV1.domain.ServicoEvento;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,41 +22,42 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/ctrlCorridas")
-public class CtrlCorridasControler {
-
-    private CorredorRepository corredorRepo;
-    private EventoRepository eventoRepo;
+public class CtrlCorridasController {
+    private ServicoCorredor servicoCorredor;
+    private ServicoEvento servicoEvento;
     private ServicoEstatisticas estatisticasService;
 
     @Autowired
-    public CtrlCorridasControler(JdbcTemplate jdbcTemplate) {
-        this.corredorRepo = new CorredorRepository(jdbcTemplate);
-        this.eventoRepo = new EventoRepository(jdbcTemplate);
-        this.estatisticasService = new ServicoEstatisticas(jdbcTemplate);
+    public CtrlCorridasController(ServicoEstatisticas estatisticasService,ServicoCorredor servicoCorredor,ServicoEvento servicoEvento) {
+        this.estatisticasService = estatisticasService;
+        this.servicoCorredor = servicoCorredor;
+        this.servicoEvento = servicoEvento;
     }
 
     @GetMapping("/corredor")
     @CrossOrigin(origins = "*")
     public List<Corredor> consultaCorredor() {
-            return corredorRepo.consultaCorredor();
+        return servicoCorredor.todos();
     }
 
     @PostMapping("/corredor")
     @CrossOrigin(origins = "*")
     public boolean cadastraCorredor(@RequestBody final Corredor corredor) {
-        return corredorRepo.cadastraCorredor(corredor);
+        servicoCorredor.cadastraCorredor(corredor);
+        return true;
     }
 
     @GetMapping("/eventos")
     @CrossOrigin(origins = "*")
     public List<Evento> consultaEventos() {
-        return eventoRepo.consultaEventos();
+        return servicoEvento.todos();
     }
 
     @PostMapping("/eventos") // adiciona evento no único corredor
     @CrossOrigin(origins = "*")
     public boolean informaEvento(@RequestBody final Evento evento) {
-        return eventoRepo.informaEvento(evento);
+        servicoEvento.cadastra(evento);
+        return true;
     }
 
     @GetMapping(value = "/estatisticas", produces = MediaType.APPLICATION_JSON_VALUE) 

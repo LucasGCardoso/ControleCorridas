@@ -1,4 +1,4 @@
-package com.bcopstein.CtrlCorredorV1.dataAccess;
+package com.bcopstein.CtrlCorredorV1.domain;
 
 public class Evento {
     private int id;

@@ -2,17 +2,16 @@ package com.bcopstein.CtrlCorredorV1.domain;
 
 import java.util.List;
 
-import com.bcopstein.CtrlCorredorV1.dataAccess.Evento;
-import com.bcopstein.CtrlCorredorV1.dataAccess.EventoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-
+@Component
 public class ServicoEstatisticas {
-    private EventoRepository eventoRepo;
+    private IEventoRepository eventoRepo;
     
-
-    public ServicoEstatisticas(JdbcTemplate jdbcTemplate) {
-        this.eventoRepo = new EventoRepository(jdbcTemplate);
+    @Autowired
+    public ServicoEstatisticas(IEventoRepository eventoRepository) {
+        this.eventoRepo = eventoRepository;
     }
 
     public List<Evento> getPorDistancia(int distancia){

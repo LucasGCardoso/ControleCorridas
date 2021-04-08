@@ -2,12 +2,15 @@ package com.bcopstein.CtrlCorredorV1.dataAccess;
 
 import java.util.List;
 
+import com.bcopstein.CtrlCorredorV1.domain.Evento;
+import com.bcopstein.CtrlCorredorV1.domain.IEventoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EventoRepository {
+public class EventoRepository implements IEventoRepository {
 
     private JdbcTemplate jdbcTemplate;
 

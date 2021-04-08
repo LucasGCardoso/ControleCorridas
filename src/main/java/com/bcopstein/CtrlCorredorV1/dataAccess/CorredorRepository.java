@@ -2,12 +2,15 @@ package com.bcopstein.CtrlCorredorV1.dataAccess;
 
 import java.util.List;
 
+import com.bcopstein.CtrlCorredorV1.domain.Corredor;
+import com.bcopstein.CtrlCorredorV1.domain.ICorredorRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CorredorRepository {
+public class CorredorRepository implements ICorredorRepository {
 
     private JdbcTemplate jdbcTemplate;
 

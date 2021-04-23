@@ -1,0 +1,1 @@
+INSERT INTO evento(id,nome,dia,mes,ano,distancia,horas,minutos,segundos) VALUES (5, 'PoaRunDay', 3,3,2021,5,5,3,34)
